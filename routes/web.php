@@ -1,89 +1,93 @@
 <?php
 
-use App\Http\Controllers\HsworkenvironmentController;
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\AccessDeniedController;
-use App\Http\Controllers\ActiontrackingController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Auth\VerificationController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CertificateVerificationController;
-use App\Http\Controllers\CompetenceassessmentController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\ContactusController;
-use App\Http\Controllers\DirectoryController;
-use App\Http\Controllers\DispersantController;
-use App\Http\Controllers\DownloadController;
-use App\Http\Controllers\EmployeeinfoController;
-use App\Http\Controllers\EquipmentmanualController;
-use App\Http\Controllers\FateoilskillController;
-use App\Http\Controllers\FatrainingController;
-use App\Http\Controllers\ForkliftopController;
-use App\Http\Controllers\FrontendController;
-use App\Http\Controllers\GalleryController;
-use App\Http\Controllers\GastestingController;
-use App\Http\Controllers\GovernanceController;
-use App\Http\Controllers\HazardreportController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Impersonate;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\HsriskController;
-use App\Http\Controllers\HsriskmgtController;
-use App\Http\Controllers\ImpactoilpollutionController;
-use App\Http\Controllers\KeypersonnelController;
-use App\Http\Controllers\LocationController;
-use App\Http\Controllers\LoginauditController;
-use App\Http\Controllers\ManageuserController;
-use App\Http\Controllers\MembcompanyController;
-use App\Http\Controllers\MobrequestController;
-use App\Http\Controllers\NewsmediaController;
-use App\Http\Controllers\SafetycultureController;
-use App\Http\Controllers\MobilizationrequestController;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\PrintController;
+use App\Http\Controllers\ScrapController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StoreController;
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Impersonate;
-use App\Http\Controllers\IncidentmgtController;
-use App\Http\Controllers\InlandresponseController;
-use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\HsriskController;
+use App\Http\Controllers\VendorController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MachineController;
-use App\Http\Controllers\MachinemaintController;
-use App\Http\Controllers\MaintdequipmentController;
-use App\Http\Controllers\MaintenanceController;
-use App\Http\Controllers\MaintrequestController;
-use App\Http\Controllers\MaintscheduleController;
-use App\Http\Controllers\MasterdocregisterController;
-use App\Http\Controllers\MiscinnorespskillController;
-use App\Http\Controllers\MultipleRecordController;
-use App\Http\Controllers\OffshoreresponseController;
-use App\Http\Controllers\OperationhandoverController;
-use App\Http\Controllers\PowerdrivenscopController;
-use App\Http\Controllers\PrintCompetenceAssessmentController;
-use App\Http\Controllers\PrintController;
-use App\Http\Controllers\ReplenishController;
-use App\Http\Controllers\ResponseequipController;
-use App\Http\Controllers\ScheduleController;
-use App\Http\Controllers\ScrapController;
-use App\Http\Controllers\SelfloaderopController;
-use App\Http\Controllers\ShorelineresponseController;
-use App\Http\Controllers\SocialShareController;
-use App\Http\Controllers\SubmittedComptassController;
-use App\Http\Controllers\SurvmodelvisualizationController;
+use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TraineeController;
-use App\Http\Controllers\TrainingcertController;
+use App\Http\Controllers\WaybillController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\TransferController;
-use App\Http\Controllers\VendorController;
-use App\Http\Controllers\WaybillController;
+use App\Http\Controllers\BiometricController;
+use App\Http\Controllers\ContactusController;
+use App\Http\Controllers\DirectoryController;
+use App\Http\Controllers\HsriskmgtController;
+use App\Http\Controllers\NewsmediaController;
+use App\Http\Controllers\ReplenishController;
 use App\Http\Controllers\WorkorderController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\DispersantController;
+use App\Http\Controllers\FatrainingController;
+use App\Http\Controllers\ForkliftopController;
+use App\Http\Controllers\GastestingController;
+use App\Http\Controllers\GovernanceController;
+use App\Http\Controllers\LoginauditController;
+use App\Http\Controllers\ManageuserController;
+use App\Http\Controllers\MobrequestController;
+use App\Http\Controllers\IncidentmgtController;
+use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\MembcompanyController;
+use App\Http\Controllers\SocialShareController;
+use App\Http\Controllers\AccessDeniedController;
+use App\Http\Controllers\BiotimesheetController;
+use App\Http\Controllers\EmployeeinfoController;
+use App\Http\Controllers\FateoilskillController;
+use App\Http\Controllers\HazardreportController;
+use App\Http\Controllers\KeypersonnelController;
+use App\Http\Controllers\MachinemaintController;
+use App\Http\Controllers\MaintrequestController;
+use App\Http\Controllers\SelfloaderopController;
+use App\Http\Controllers\TrainingcertController;
+use App\Http\Controllers\MaintscheduleController;
+use App\Http\Controllers\ResponseequipController;
+use App\Http\Controllers\SafetycultureController;
+use App\Http\Controllers\ActiontrackingController;
+use App\Http\Controllers\InlandresponseController;
+use App\Http\Controllers\MultipleRecordController;
 use App\Http\Controllers\VisitorbookingController;
-use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\EquipmentmanualController;
+use App\Http\Controllers\MaintdequipmentController;
+use App\Http\Controllers\PowerdrivenscopController;
+use App\Http\Controllers\ScannerlocationController;
+use App\Http\Controllers\OffshoreresponseController;
+use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\HsworkenvironmentController;
+use App\Http\Controllers\MasterdocregisterController;
+use App\Http\Controllers\MiscinnorespskillController;
+use App\Http\Controllers\OperationhandoverController;
+use App\Http\Controllers\ShorelineresponseController;
+use App\Http\Controllers\SubmittedComptassController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\ImpactoilpollutionController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\MobilizationrequestController;
+use App\Http\Controllers\CompetenceassessmentController;
+use App\Http\Controllers\SurvmodelvisualizationController;
+use App\Http\Controllers\CertificateVerificationController;
+use App\Http\Controllers\PrintCompetenceAssessmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,7 +101,7 @@ use App\Http\Controllers\PartnerController;
 */
 
 Route::get('inventory/login', [LoginController::class,'showLoginForm'])->name('login');
-Route::post('inventory/login', [LoginController::class,'login']);
+Route::post('inventory/login', [LoginController::class,'authenticate']);
 
 
 // Password Reset Routes...
@@ -175,6 +179,26 @@ Route::get('download/trainee/certificate/{filename}',[CertificateVerificationCon
 
 Route::group(['prefix' => 'dashboard','middleware' => ['auth','staffaccess']], function() {
     Route::get('/',[HomeController::class,'index'])->name('dashboard.index');
+    // Route::resource('biometric', BiometricController::class);
+    Route::get('biometric', [BiometricController::class, 'index'])->name('bio.home');
+    Route::get('biometric/store', [BiometricController::class, 'store'])->name('bio.store');
+    Route::get('biometric/capture', [BiometricController::class, 'create'])->name('bio.create');
+    Route::get('biometric/add', [BiometricController::class, 'add'])->name('bio.add');
+    Route::get('biometric/all', [BiometricController::class, 'show'])->name('bio.all');
+    Route::delete('biometric/delete/{user_id}', [BiometricController::class, 'destroy'])->name('bio.destroy');
+
+    Route::post('scanner/location', [ScannerlocationController::class, 'store'])->name('scanner.store');
+    Route::get('scanner/location', [ScannerlocationController::class, 'index'])->name('scanner.locations');
+    Route::delete('scanner/location/delete/{localion_id}', [ScannerlocationController::class, 'destroy'])->name('scanner.destroy');
+
+    Route::get('biotime/system', [BiotimesheetController::class, 'index'])->name('bio.timesys');
+    Route::get('biotime/store', [BiotimesheetController::class, 'store'])->name('biotimesys.store');
+    Route::get('biotime/camkey', [BiotimesheetController::class, 'camskey'])->name('cam.key');
+    Route::get('print/bio/{user_id}/{date}/{print_type}',[BiotimesheetController::class,'print'])->name('print.bio');
+
+    Route::get('biotimesheet/report', [BiotimesheetController::class, 'report'])->name('timesheet.report');
+    Route::get('biotimesheet/monthly/report/{user}/{date}', [BiotimesheetController::class, 'monthlyReport'])->name('timesheet.monthly.report');
+    Route::get('biotimesheet/yearly/report/{user}/{date}', [BiotimesheetController::class, 'yearlyReport'])->name('timesheet.yearly.report');
     
     Route::middleware(['admin'])->group(function () {
         Route::get('/impersonate/user/{id}',[Impersonate::class,'index'])->name('staff.impersonate');
@@ -571,6 +595,7 @@ Route::get('autocomplete', [WaybillController::class, 'autocomplete'])->name('au
 //print waybill
 Route::get('print/waybill/{waybill}',[PrintController::class,'printwaybill'])->name('print.waybill');
 
+
 //visitor booking
 Route::resource('visitorbookings',VisitorbookingController::class);
 
@@ -589,8 +614,6 @@ Route::post('approve/maintenance-request/{id}',[MaintrequestController::class,'a
 
 
 Route::get('dashboard/impersonate/destroy',[Impersonate::class,'destroy'])->name('staff.impersonate.destroy');
-
-
 
 
 // Route::get('/logout', [LoginController::class,'userLogout'])->name('user.logout');

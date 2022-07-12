@@ -309,8 +309,24 @@
              <ul class="treeview-menu">
                  <li><a href="{{ route('manageusers.index') }}"><i class="fa fa-user"></i> User Management</a></li>
                  <li><a href="{{ route('login.details') }}"><i class="fa fa-user"></i> Login Trail</a></li>
-             </ul>
-         </li>
+                 
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-cogs"></i>
+                    <span>Biometric Management</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                       </span>
+                   </a>
+                   
+                   <ul class="treeview-menu">
+                       <li><a href="{{ route('bio.home') }}"><i class="fa fa-user"></i> User Biometrics</a></li>
+                       <li><a href="{{ route('scanner.locations') }}"><i class="fa fa-user"></i> Scanner Locations</a></li>
+                       <li><a href="{{ route('timesheet.report') }}"><i class="fa fa-user"></i> Timesheet Report</a></li>
+                   </ul>
+           </li>
          @endif
 
         @endif

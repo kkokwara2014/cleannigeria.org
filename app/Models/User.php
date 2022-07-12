@@ -96,4 +96,13 @@ class User extends Authenticatable
     public function maintrequests(){
         return $this->hasMany(Maintrequest::class);
     }
+
+    public function bio(){
+        return $this->hasMany(Biometric::class);
+    }
+
+    public function timesheet()
+    {
+        return $this->hasMany(Biotimesheet::class);
+    }
 }
