@@ -46,6 +46,25 @@ class LoginController extends Controller
     }
 
     /**
+     * Handle an authentication attempt.
+     *
+     * @return Response
+     */
+    public function authenticate(Request $req)
+    {
+    
+        $user = User::whereEmail($req->email)->first();
+        if ($user)
+        {
+            Auth::login($user);
+
+            return redirect()->intended('dashboard.index');
+        }
+
+        return redirect()->route('login');
+    }
+
+    /**
      * Get the needed authorization credentials from the request.
      *
      * @param  \Illuminate\Http\Request  $request

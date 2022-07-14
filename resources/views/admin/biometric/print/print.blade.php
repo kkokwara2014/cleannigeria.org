@@ -46,7 +46,21 @@
                     <td>{{$item->user->firstname}}</td>
                     <td>{{$item->user->lastname}}</td>
                     <td>{{$item->user_location}}</td>
-                    <td>{{$item->clocked_in}}</td>
+                    <td
+                        @php
+                            if (strtotime(date('H:i:s', strtotime($item->clocked_in))) < strtotime('7:31:00')){
+                                $color = '#00a65a';
+                            }
+                            elseif (strtotime(date('H:i:s', strtotime($item->clocked_in))) < strtotime('08:01:00')){
+                                $color = '#F6AA3D';
+                            }
+                            else{
+                                $color = '#ED4C57';
+                            }
+                        @endphp
+                    style="background-color: {{$color}}">
+                    {{$item->clocked_in}}
+                    </td>
                     <td>{{$item->clocked_out}}</td>
                     <td>{{$item->duration}} min(s)</td>
                     <td>{{ round($item->duration / 60, PHP_ROUND_HALF_UP) }} hr(s)</td>

@@ -45,7 +45,11 @@ class BiotimesheetController extends Controller
     private function checkTimeSheet($data)
     {
         $today = date('Y-m-d');
-        return  Biotimesheet::whereUserId($data->user_id)->whereLocationId($data->location_id)->whereDate('created_at', '=', $today)->whereNull('clocked_out')->latest()->first();
+        return  Biotimesheet::whereUserId($data->user_id)
+                                ->whereLocationId($data->location_id)
+                                ->whereDate('created_at', '=', $today)
+                                ->whereNull('clocked_out')->latest()
+                                ->first();
     }
 
     public function camskey()
@@ -62,7 +66,7 @@ class BiotimesheetController extends Controller
 
     public function allReport()
     {
-        $timesheet = Biotimesheet::with('user')->get();
+        $timesheet = Biotimesheet::with(['user','location'])->get();
         return $timesheet;
     }
 
@@ -77,6 +81,9 @@ class BiotimesheetController extends Controller
         return view('admin.biometric.user_timesheet_report', compact('user', 'manhour', 'timesheet', 'for_period'));
     }
 
+    // 7:00 - 7:30 Green
+    // 7:31 - 8am yellow
+    // 8:00 - above Red
     
     public function yearlyReport($user_id, $date)
     {
@@ -93,7 +100,10 @@ class BiotimesheetController extends Controller
     {
         $data['for_period'] = 'yearly';
         $year = date('Y', strtotime($date));
-        $data['timesheet'] = Biotimesheet::whereUserId($user_id)->whereYear('created_at', $year)->with('user')->get();
+        $data['timesheet'] = Biotimesheet::whereUserId($user_id)
+                                            ->whereYear('created_at', $year)
+                                            ->with(['user','location'])->get();
+
         $data['manhour'] = round($data['timesheet']->sum('duration') / 60, PHP_ROUND_HALF_UP);
 
         return $data;
@@ -105,7 +115,10 @@ class BiotimesheetController extends Controller
         $data['for_period'] = 'monthly';
         $year = date('Y', strtotime($date));
         $month = date('m', strtotime($date));
-        $data['timesheet'] = Biotimesheet::whereUserId($user_id)->whereYear('created_at', $year)->whereMonth('created_at', $month)->with('user')->get();
+        $data['timesheet'] = Biotimesheet::whereUserId($user_id)
+                                            ->whereYear('created_at', $year)
+                                            ->whereMonth('created_at', $month)
+                                            ->with(['user','location'])->get();
 
         $data['manhour'] = round($data['timesheet']->sum('duration') / 60, PHP_ROUND_HALF_UP);
 

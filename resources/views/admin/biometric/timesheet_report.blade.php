@@ -40,10 +40,30 @@ General Timesheet Report
                                     <td>{{$item->user->firstname}}</td>
                                     <td>{{$item->user->lastname}}</td>
                                     <td>{{$item->user_location}}</td>
-                                    <td>{{$item->clocked_in}}</td>
+                                    <td
+                                        
+                                        @php
+                                            if($item->location->is_entrance){
+                                                if (strtotime(date('H:i:s', strtotime($item->clocked_in))) < strtotime('7:31:00')){
+                                                    $color = '#00a65a';
+                                                }
+                                                elseif (strtotime(date('H:i:s', strtotime($item->clocked_in))) < strtotime('08:01:00')){
+                                                    $color = '#F6AA3D';
+                                                }
+                                                else{
+                                                    $color = '#ED4C57';
+                                                }
+
+                                            }else{
+                                                $color = '';
+                                            }
+                                        @endphp
+                                    style="background-color: {{$color}}">
+                                        {{$item->clocked_in}}
+                                    </td>
                                     <td>{{$item->clocked_out}}</td>
-                                    <td>{{$item->duration}}</td>
-                                    <td>{{ round($item->duration / 60, PHP_ROUND_HALF_UP) }}</td>
+                                    <td>{{$item->duration}} min(s)</td>
+                                    <td>{{ round($item->duration / 60, PHP_ROUND_HALF_UP) }} hr(s)</td>
                                     <td>
                                         <a href="{{ route('timesheet.monthly.report', [$item->user_id, date('Y-m-d', strtotime($item->clocked_in))]) }}" target="_blank" class="btn btn-sm btn-primary">Montnly</a>
                                         <a href="{{ route('timesheet.yearly.report', [$item->user_id, date('Y-m-d', strtotime($item->clocked_in))]) }}" target="_blank" class="btn btn-sm bg-purple">Yearly</a>
